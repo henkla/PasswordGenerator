@@ -5,103 +5,201 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordGenerator"
         mc:Ignorable="d"
-        Title="PasswordGenerator">
+        Title="Password Generator"
+        Height="350" Width="525" FontFamily="Segoe UI Light">
 
-    <Grid Margin="25">
+
+    <Grid Margin="0,1,0,-1">
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" ></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
         </Grid.RowDefinitions>
 
-        <!-- Length picker -->
-        <Label Name="lengthLabel"
-               Grid.Column="0" Grid.Row="0"
-               HorizontalAlignment="Right">
-            Length
-        </Label>
+        <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"
+                   FontSize="20" FontWeight="Bold"
+                   Text="Password Generator"/>
 
-        <Slider Name="lengthSlider" 
-                Grid.Column="1" Grid.Row="0"
-                Minimum="4" Maximum="256" Value="8" 
-                TickPlacement="None" TickFrequency="1" IsSnapToTickEnabled="True">
-        </Slider>
+        <TextBlock Grid.Column="1" Grid.Row="2"
+                   Text="Version 1.0"/>
 
-        <TextBox Name="lengthTextbox"
-                 Grid.Column="2" Grid.Row="0"
-                 IsEnabled="False" BorderThickness="0"
-                 Text="{Binding ElementName=lengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}">
-        </TextBox>
+        <StackPanel Grid.Column="1" Grid.Row="3" 
+                    Orientation="Horizontal"
+                    Margin="0,15,0,0">
+            <TextBlock Text="Length:" FontWeight="Bold"/>
 
+            <TextBox IsEnabled="False" BorderThickness="0"
+                     Text="{Binding ElementName=lengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
         
-        <!-- Symbols picker -->
-        <Label Name="symbolsLabel"
-               Grid.Column="0" Grid.Row="1"
-               HorizontalAlignment="Right">
-            Include symbols
-        </Label>
 
-        <CheckBox Name="symbolsCheckbox"
-                  Grid.Column="1" Grid.Row="1"
-                  IsChecked="True">
-        </CheckBox>
+        <Slider Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="4"
+                x:Name="lengthSlider" 
+                Minimum="4" Maximum="256" Value="12" 
+                Width="200"
+                TickPlacement="None" TickFrequency="1" IsSnapToTickEnabled="True"/>
 
+        <TextBlock Grid.Column="1" Grid.Row="5"
+                   Text="Include Numerics" />
 
-        <!-- Numbers picker -->
-        <Label Name="numbersLabel"
-               Grid.Column="0" Grid.Row="2"
-               HorizontalAlignment="Right">
-            Include numbers
-        </Label>
+        <CheckBox Grid.Column="1" Grid.Row="6" 
+                  x:Name="numericsCheckbox"
+                        IsChecked="True" />
 
-        <CheckBox Name="numbersCheckbox"
-                  Grid.Column="1" Grid.Row="2"
-                  IsChecked="True">
-        </CheckBox>
+        <TextBlock Grid.Column="1" Grid.Row="7"
+                   Text="Include Special Characters" />
 
+        <CheckBox Grid.Column="1" Grid.Row="8" 
+                  x:Name="specialsCheckbox"
+                  IsChecked="True" />
 
-        <!-- Casing picker -->
-        <Label Name="casingLabel"
-               Grid.Column="0" Grid.Row="3"
-               HorizontalAlignment="Right">
-            Casing
-        </Label>
+        <Button Grid.Column="1" Grid.Row="9"
+                x:Name="generateButton"
+                Margin="0,15,0,0"
+                Content="Generate Password"
+                Width="200"
+                Click="generateButton_Click"/>
 
-        <ComboBox Name="casingComboBox"
-                  Grid.Column="1" Grid.Row="3">
-            <ComboBoxItem IsSelected="True">mIxEd CaSe</ComboBoxItem>
-            <ComboBoxItem>UPPER CASE</ComboBoxItem>
-            <ComboBoxItem>lower case</ComboBoxItem>
-        </ComboBox>
-
+        <TextBox x:Name="passwordTextBox"
+                 Grid.Column="1" Grid.Row="10"
+                 TextWrapping="WrapWithOverflow"
+                 Width="200"
+                 Margin="0,15,0,0"
+                 Text="{Binding Path=password,Mode=OneWay}" IsReadOnly="True"/>
         
-        <!-- Generate button -->
-        <Button Name="generateButton"
-                Margin="0,10,00,10">
-            Generate
-        </Button>
 
-        <!-- Password field-->
-        <TextBox Name="passwordTextBox"
-                 Padding="10"
-                 Text="Password">
-        </TextBox>
-        
-        <!-- Copy button --><!--
-        <Button Name="copyButton"
-                Margin="0,10,0,0" Padding="10">
-            Copy
-        </Button>-->
+
+
 
     </Grid>
+    <!--<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="Auto" Margin="15">
+
+        -->
+    <!-- Length picker -->
+    <!--
+        <Label Name="lengthLabel"
+                   HorizontalAlignment="Left">
+            Length
+        </Label>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="Auto">
+            <Slider Name="lengthSlider" 
+                    Minimum="4" Maximum="256" Value="8" 
+                    TickPlacement="None" TickFrequency="1" IsSnapToTickEnabled="True"
+                    Width="280" Margin="0,0,0,0">
+            </Slider>
+
+            <TextBox Name="lengthTextbox"
+                     IsEnabled="False" BorderThickness="0"
+                     Margin="0,0"
+                     Text="{Binding ElementName=lengthSlider, Path=Value, UpdateSourceTrigger=PropertyChanged}">
+            </TextBox>
+        </StackPanel>
+
+        -->
+    <!-- Symbols picker -->
+    <!--
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,15,0,0">
+
+            -->
+    <!-- Numbers picker -->
+    <!--
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0">
+                <Label Name="numbersLabel"
+                   HorizontalAlignment="Right">
+                    Include numbers
+                </Label>
+
+                <CheckBox Name="numbersCheckbox"
+                      Grid.Column="1" Grid.Row="2"
+                      IsChecked="True"
+                      Margin="5,0">
+                </CheckBox>
+            </StackPanel>
+
+            -->
+    <!-- Numbers picker -->
+    <!--
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="35,0,0,0">
+                <Label Name="symbolsLabel"
+                   HorizontalAlignment="Right">
+                    Include symbols
+                </Label>
+
+                <CheckBox Name="symbolsCheckbox"
+                      IsChecked="True"
+                      Margin="5,0">
+                </CheckBox>
+            </StackPanel>
+            
+        </StackPanel>
+
+
+        
+
+
+        -->
+    <!-- Casing picker -->
+    <!--
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,15,0,0">
+            <Label Name="casingLabel">
+                Casing
+            </Label>
+
+            <ComboBox Name="casingComboBox"
+                      Margin="5,0">
+                <ComboBoxItem IsSelected="True">mIxEd CaSe</ComboBoxItem>
+                <ComboBoxItem>UPPER CASE</ComboBoxItem>
+                <ComboBoxItem>lower case</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+
+        
+        -->
+    <!-- Buttons and fields-->
+    <!--
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5,15,0,0">
+            -->
+    <!-- Generate button -->
+    <!--
+            <Button Name="generateButton" Padding="5">
+                Generate
+            </Button>
+
+            -->
+    <!-- Password field-->
+    <!--
+            <TextBox Name="passwordTextBox"
+                 Text="{Binding Path=Password,Mode=TwoWay}" Margin="10,0,0,0" Padding="5" Width="175">
+            </TextBox>
+
+            -->
+    <!-- Copy button -->
+    <!--
+            <Button Name="copyButton" Margin="10,0,0,0" Padding="5" Click="copyButton_Click">
+                Copy
+            </Button>
+        </StackPanel>
+        
+        
+    </StackPanel>-->
 
 </Window>
