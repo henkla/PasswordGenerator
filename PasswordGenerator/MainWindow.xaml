@@ -6,11 +6,15 @@
         xmlns:local="clr-namespace:PasswordGenerator"
         mc:Ignorable="d"
         Title="Password Generator"
-        Height="350" Width="525" FontFamily="Segoe UI Light">
+        Height="560" Width="240" FontFamily="Segoe UI Light">
 
 
-    <Grid Margin="0,1,0,-1">
+    <Grid>
 
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </Grid.Resources>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />
             <ColumnDefinition Width="auto" />
@@ -20,8 +24,14 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20" />
         </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -59,20 +69,41 @@
                 TickPlacement="None" TickFrequency="1" IsSnapToTickEnabled="True"/>
 
         <TextBlock Grid.Column="1" Grid.Row="5"
+                   Margin="0,15,0,0"
+                   Text="Casing"/>
+
+        <ComboBox Grid.Column="1" Grid.Row="6" 
+                  x:Name="casingComboBox">
+            <ComboBoxItem IsSelected="True">mIxEd CaSe</ComboBoxItem>
+            <ComboBoxItem>UPPER CASE</ComboBoxItem>
+            <ComboBoxItem>lower case</ComboBoxItem>
+        </ComboBox>
+
+        <TextBlock Grid.Column="1" Grid.Row="7"
+                   Margin="0,15,0,0"
                    Text="Include Numerics" />
 
-        <CheckBox Grid.Column="1" Grid.Row="6" 
+        <CheckBox Grid.Column="1" Grid.Row="8" 
                   x:Name="numericsCheckbox"
                         IsChecked="True" />
 
-        <TextBlock Grid.Column="1" Grid.Row="7"
+        <TextBlock Grid.Column="1" Grid.Row="9"
                    Text="Include Special Characters" />
 
-        <CheckBox Grid.Column="1" Grid.Row="8" 
+        <CheckBox Grid.Column="1" Grid.Row="10" 
                   x:Name="specialsCheckbox"
                   IsChecked="True" />
 
-        <Button Grid.Column="1" Grid.Row="9"
+        <TextBlock Grid.Column="1" Grid.Row="11"
+                   x:Name="excludeSpecialsLabel"
+                   Visibility="{Binding ElementName=specialsCheckbox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"
+                   Text="Exclude Characters" />
+
+        <TextBox Grid.Column="1" Grid.Row="12"
+                 x:Name="excludeSpecialsTextBox"
+                 Visibility="{Binding ElementName=specialsCheckbox, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <Button Grid.Column="1" Grid.Row="13"
                 x:Name="generateButton"
                 Margin="0,15,0,0"
                 Content="Generate Password"
@@ -80,10 +111,11 @@
                 Click="generateButton_Click"/>
 
         <TextBox x:Name="passwordTextBox"
-                 Grid.Column="1" Grid.Row="10"
-                 TextWrapping="WrapWithOverflow"
+                 Grid.Column="1" Grid.Row="14"
+                 TextWrapping="Wrap"
                  Width="200"
                  Margin="0,15,0,0"
+                 Height="200"
                  Text="{Binding Path=password,Mode=OneWay}" IsReadOnly="True"/>
         
 
